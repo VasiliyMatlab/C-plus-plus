@@ -11,7 +11,7 @@ struct Point {
         this->y = y;
     }
 
-    // Диструктор
+    // Деструктор
     ~Point() {
         this->x = 0;
         this->y = 0;
