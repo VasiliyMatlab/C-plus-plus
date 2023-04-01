@@ -19,6 +19,16 @@ MyVector::MyVector(int n): sz(n), data(new uint8_t[n]) {
 }
 
 /**
+ * @brief Копирующий конструктор класса MyVector
+ * 
+ * @param[in] cls Ссылка на экземпляр класса, откуда происходит копирование
+ */
+MyVector::MyVector(const MyVector &cls): sz(cls.sz), data(new uint8_t[cls.sz]) {
+    for (int i = 0; i < this->sz; i++)
+        this->data[i] = cls.data[i];
+}
+
+/**
  * @brief Деструктор класса MyVector
  * 
  */
@@ -38,15 +48,32 @@ int MyVector::size(void) const {
 }
 
 /**
+ * @brief Оператор копирующего присваивания
+ * 
+ * @param[in] cls Ссылка на экземпляр класса, из которого
+ * происходит копирование
+ * @return Ссылка на экземпляр класса, в который происходило
+ * копирование
+ */
+MyVector &MyVector::operator=(const MyVector &cls) {
+    uint8_t *ptr = new uint8_t[cls.sz];
+    for (int i = 0; i < cls.sz; i++)
+        ptr[i] = cls.data[i];
+    delete [] this->data;
+    this->data = ptr;
+    this->sz   = cls.sz;
+    return *this;
+}
+
+/**
  * @brief Перегрузка взятия значения из вектора по индексу
  * 
  * @param[in] i Индекс возвращаемого элемента
  * @return Ссылка на индексируемый элемент
  */
 uint8_t &MyVector::operator[](int i) {
-    if ((i < 0) || (i >= this->sz)) {
+    if ((i < 0) || (i >= this->sz))
         throw std::out_of_range("MyVector::operator[]");
-    }
 
     return this->data[i];
 }
@@ -61,9 +88,8 @@ uint8_t &MyVector::operator[](int i) {
 std::ostream &operator<<(std::ostream &out, const MyVector &cls) {
     out << "Size: " << cls.sz << std::endl;
     out << "Data: ";
-    for (const auto &x: cls) {
+    for (const auto &x: cls)
         out << "0x" << std::hex << unsigned(x) << " ";
-    }
     return out << std::endl;
 }
 

@@ -13,12 +13,15 @@ private:
 public:
     MyVector(void);
     explicit MyVector(int n);
+    MyVector(const MyVector &cls);
     ~MyVector(void);
 
     int size(void) const;
 
+    MyVector &operator=(const MyVector &cls);
     uint8_t &operator[](int i);
     friend std::ostream &operator<<(std::ostream &out, const MyVector &cls);
+    
     uint8_t *begin(void) const;
     uint8_t *end(void) const;
 };
