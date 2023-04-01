@@ -22,11 +22,18 @@ public:
     MyVector &operator=(const MyVector &cls);
     MyVector &operator=(MyVector &&cls);
     uint8_t &operator[](int i);
+    const uint8_t &operator[](int i) const;
     friend std::ostream &operator<<(std::ostream &out, const MyVector &cls);
     
     uint8_t *begin(void) const;
     uint8_t *end(void) const;
 };
+
+MyVector operator+(const MyVector &left, const MyVector &right);
+MyVector operator-(const MyVector &left, const MyVector &right);
+MyVector operator*(const MyVector &left, const MyVector &right);
+MyVector operator/(const MyVector &left, const MyVector &right);
+MyVector operator%(const MyVector &left, const MyVector &right);
 
 
 #endif /* __MY_VECTOR_HPP__ */

@@ -104,6 +104,19 @@ uint8_t &MyVector::operator[](int i) {
 }
 
 /**
+ * @brief Перегрузка чтения значения вектора по индексу
+ * 
+ * @param[in] i Индекс читаемого элемента
+ * @return Ссылка на константный индексируемый элемент
+ */
+const uint8_t &MyVector::operator[](int i) const {
+    if ((i < 0) || (i >= this->sz))
+        throw std::out_of_range("MyVector::operator[]");
+
+    return this->data[i];
+}
+
+/**
  * @brief Перегрузка вставки в текстовый поток
  * 
  * @param[in] out Ссылка на входящий текстовый поток
@@ -136,4 +149,94 @@ uint8_t *MyVector::begin(void) const {
  */
 uint8_t *MyVector::end(void) const {
     return &this->data[this->sz];
+}
+
+/**
+ * @brief Перегрузка операции сложения
+ * 
+ * @param[in] left Левый вектор
+ * @param[in] right Правый вектор
+ * @return Результирующий вектор
+ */
+MyVector operator+(const MyVector &left, const MyVector &right) {
+    if (left.size() != right.size())
+        throw std::length_error("operator+(const MyVector &left, const MyVector &right)");
+    
+    MyVector res(left.size());
+    for (int i = 0; i < left.size(); i++)
+        res[i] = left[i] + right[i];
+
+    return std::move(res);
+}
+
+/**
+ * @brief Перегрузка операции вычитания
+ * 
+ * @param[in] left Левый вектор
+ * @param[in] right Правый вектор
+ * @return Результирующий вектор
+ */
+MyVector operator-(const MyVector &left, const MyVector &right) {
+    if (left.size() != right.size())
+        throw std::length_error("operator+(const MyVector &left, const MyVector &right)");
+    
+    MyVector res(left.size());
+    for (int i = 0; i < left.size(); i++)
+        res[i] = left[i] - right[i];
+
+    return std::move(res);
+}
+
+/**
+ * @brief Перегрузка операции умножения
+ * 
+ * @param[in] left Левый вектор
+ * @param[in] right Правый вектор
+ * @return Результирующий вектор
+ */
+MyVector operator*(const MyVector &left, const MyVector &right) {
+    if (left.size() != right.size())
+        throw std::length_error("operator+(const MyVector &left, const MyVector &right)");
+    
+    MyVector res(left.size());
+    for (int i = 0; i < left.size(); i++)
+        res[i] = left[i] * right[i];
+
+    return std::move(res);
+}
+
+/**
+ * @brief Перегрузка операции деления
+ * 
+ * @param[in] left Левый вектор
+ * @param[in] right Правый вектор
+ * @return Результирующий вектор
+ */
+MyVector operator/(const MyVector &left, const MyVector &right) {
+    if (left.size() != right.size())
+        throw std::length_error("operator+(const MyVector &left, const MyVector &right)");
+    
+    MyVector res(left.size());
+    for (int i = 0; i < left.size(); i++)
+        res[i] = left[i] / right[i];
+
+    return std::move(res);
+}
+
+/**
+ * @brief Перегрузка операции взятия остатка от деления
+ * 
+ * @param[in] left Левый вектор
+ * @param[in] right Правый вектор
+ * @return Результирующий вектор
+ */
+MyVector operator%(const MyVector &left, const MyVector &right) {
+    if (left.size() != right.size())
+        throw std::length_error("operator+(const MyVector &left, const MyVector &right)");
+    
+    MyVector res(left.size());
+    for (int i = 0; i < left.size(); i++)
+        res[i] = left[i] % right[i];
+
+    return std::move(res);
 }
