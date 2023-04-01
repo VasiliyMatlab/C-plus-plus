@@ -13,7 +13,10 @@ MyVector::MyVector(void): sz(0), data(nullptr) {}
  * 
  * @param[in] n Размер вектора
  */
-MyVector::MyVector(size_t n): sz(n), data(new uint8_t[n]) {}
+MyVector::MyVector(int n): sz(n), data(new uint8_t[n]) {
+    for (int i = 0; i < n; i++)
+        this->data[i] = 0;
+}
 
 /**
  * @brief Деструктор класса MyVector
@@ -30,28 +33,8 @@ MyVector::~MyVector(void) {
  * 
  * @return Длина вектора
  */
-size_t MyVector::size(void) const {
+int MyVector::size(void) const {
     return this->sz;
-}
-
-/**
- * @brief Итератор класса MyVector (начальный)
- * 
- * @param[in] cls Ссылка на экземпляр класса
- * @return Итерируемое значение
- */
-uint8_t *begin(const MyVector &cls) {
-    return &cls.data[0];
-}
-
-/**
- * @brief Итератор класса MyVector (конечный)
- * 
- * @param[in] cls Ссылка на экземпляр класса
- * @return Итерируемое значение
- */
-uint8_t *end(const MyVector &cls) {
-    return &cls.data[cls.sz];
 }
 
 /**
@@ -60,9 +43,9 @@ uint8_t *end(const MyVector &cls) {
  * @param[in] i Индекс возвращаемого элемента
  * @return Ссылка на индексируемый элемент
  */
-uint8_t &MyVector::operator[](size_t i) {
+uint8_t &MyVector::operator[](int i) {
     if ((i < 0) || (i >= this->sz)) {
-        throw out_of_range("MyVector::operator[]");
+        throw std::out_of_range("MyVector::operator[]");
     }
 
     return this->data[i];
@@ -75,11 +58,31 @@ uint8_t &MyVector::operator[](size_t i) {
  * @param[in] cls Ссылка на экземпляр класса
  * @return Ссылка на исходящий текстовый поток
  */
-ostream &operator<<(ostream &out, const MyVector &cls) {
-    out << "Size: " << cls.sz << endl;
+std::ostream &operator<<(std::ostream &out, const MyVector &cls) {
+    out << "Size: " << cls.sz << std::endl;
     out << "Data: ";
-    for (auto &x: cls) {
-        out << "0x" << hex << unsigned(x) << " ";
+    for (const auto &x: cls) {
+        out << "0x" << std::hex << unsigned(x) << " ";
     }
-    return out << endl;
+    return out << std::endl;
+}
+
+/**
+ * @brief Итератор класса MyVector (начальный)
+ * 
+ * @param[in] cls Ссылка на экземпляр класса
+ * @return Итерируемое значение
+ */
+uint8_t *MyVector::begin(void) const {
+    return &this->data[0];
+}
+
+/**
+ * @brief Итератор класса MyVector (конечный)
+ * 
+ * @param[in] cls Ссылка на экземпляр класса
+ * @return Итерируемое значение
+ */
+uint8_t *MyVector::end(void) const {
+    return &this->data[this->sz];
 }
