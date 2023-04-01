@@ -29,6 +29,16 @@ MyVector::MyVector(const MyVector &cls): sz(cls.sz), data(new uint8_t[cls.sz]) {
 }
 
 /**
+ * @brief Перемещающий конструктор класса MyVector
+ * 
+ * @param[in,out] cls Ссылка на rvalue
+ */
+MyVector::MyVector(MyVector &&cls): sz(cls.sz), data(cls.data) {
+    cls.sz   = 0;
+    cls.data = nullptr;
+}
+
+/**
  * @brief Деструктор класса MyVector
  * 
  */
@@ -62,6 +72,21 @@ MyVector &MyVector::operator=(const MyVector &cls) {
     delete [] this->data;
     this->data = ptr;
     this->sz   = cls.sz;
+    return *this;
+}
+
+/**
+ * @brief Оператор перемещающего присваивания
+ * 
+ * @param[in,out] cls Ссылка на rvalue
+ * @return Ссылка на экземпляр класса, в который происходило
+ * перемещение содержимого
+ */
+MyVector &MyVector::operator=(MyVector &&cls) {
+    this->sz   = cls.sz;
+    this->data = cls.data;
+    cls.sz   = 0;
+    cls.data = nullptr;
     return *this;
 }
 
