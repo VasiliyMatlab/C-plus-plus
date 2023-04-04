@@ -13,7 +13,7 @@ MyVector::MyVector(void): sz(0), data(nullptr) {}
  * 
  * @param[in] n Размер вектора
  */
-MyVector::MyVector(int n): sz(n), data(new uint8_t[n]) {
+MyVector::MyVector(int n): sz(n), data(new double[n]) {
     for (int i = 0; i < n; i++)
         this->data[i] = 0;
 }
@@ -21,9 +21,9 @@ MyVector::MyVector(int n): sz(n), data(new uint8_t[n]) {
 /**
  * @brief Копирующий конструктор класса MyVector
  * 
- * @param[in] cls Ссылка на экземпляр класса, откуда происходит копирование
+ * @param[in] cls Ссылка на экземпляр класса MyVector, откуда происходит копирование
  */
-MyVector::MyVector(const MyVector &cls): sz(cls.sz), data(new uint8_t[cls.sz]) {
+MyVector::MyVector(const MyVector &cls): sz(cls.sz), data(new double[cls.sz]) {
     for (int i = 0; i < this->sz; i++)
         this->data[i] = cls.data[i];
 }
@@ -60,13 +60,13 @@ int MyVector::size(void) const {
 /**
  * @brief Оператор копирующего присваивания
  * 
- * @param[in] cls Ссылка на экземпляр класса, из которого
+ * @param[in] cls Ссылка на экземпляр класса MyVector, из которого
  * происходит копирование
- * @return Ссылка на экземпляр класса, в который происходило
+ * @return Ссылка на экземпляр класса MyVector, в который происходило
  * копирование
  */
 MyVector &MyVector::operator=(const MyVector &cls) {
-    uint8_t *ptr = new uint8_t[cls.sz];
+    double *ptr = new double[cls.sz];
     for (int i = 0; i < cls.sz; i++)
         ptr[i] = cls.data[i];
     delete [] this->data;
@@ -79,7 +79,7 @@ MyVector &MyVector::operator=(const MyVector &cls) {
  * @brief Оператор перемещающего присваивания
  * 
  * @param[in,out] cls Ссылка на rvalue
- * @return Ссылка на экземпляр класса, в который происходило
+ * @return Ссылка на экземпляр класса MyVector, в который происходило
  * перемещение содержимого
  */
 MyVector &MyVector::operator=(MyVector &&cls) {
@@ -96,7 +96,7 @@ MyVector &MyVector::operator=(MyVector &&cls) {
  * @param[in] i Индекс возвращаемого элемента
  * @return Ссылка на индексируемый элемент
  */
-uint8_t &MyVector::operator[](int i) {
+double &MyVector::operator[](int i) {
     if ((i < 0) || (i >= this->sz))
         throw std::out_of_range("MyVector::operator[]");
 
@@ -109,7 +109,7 @@ uint8_t &MyVector::operator[](int i) {
  * @param[in] i Индекс читаемого элемента
  * @return Ссылка на константный индексируемый элемент
  */
-const uint8_t &MyVector::operator[](int i) const {
+const double &MyVector::operator[](int i) const {
     if ((i < 0) || (i >= this->sz))
         throw std::out_of_range("MyVector::operator[]");
 
@@ -120,43 +120,165 @@ const uint8_t &MyVector::operator[](int i) const {
  * @brief Перегрузка вставки в текстовый поток
  * 
  * @param[in] out Ссылка на входящий текстовый поток
- * @param[in] cls Ссылка на экземпляр класса
+ * @param[in] cls Ссылка на экземпляр класса MyVector
  * @return Ссылка на исходящий текстовый поток
  */
 std::ostream &operator<<(std::ostream &out, const MyVector &cls) {
     out << "Size: " << cls.sz << std::endl;
-    out << "Data: ";
+    out << "Data: [";
+    if (cls.sz == 0)
+        return out << "]" << std::endl;
     for (const auto &x: cls)
-        out << "0x" << std::hex << unsigned(x) << " ";
-    return out << std::endl;
+        out << x << ", ";
+    return out << "\b\b]" << std::endl;
+}
+
+/**
+ * @brief Перегрузка оператора "+=" при сложении экземпляра класса MyVector с
+ * другим экземпляром
+ * 
+ * @param[in] cls Ссылка на экземпляр класса MyVector, с которым происходит сложение
+ * @return Ссылка на экземпляр класса MyVector с результатом выполнения операции
+ */
+MyVector &MyVector::operator+=(const MyVector &cls) {
+    if (this->sz != cls.sz)
+        throw std::length_error("operator+=(const MyVector &cls)");
+    
+    for (int i = 0; i < this->sz; i++)
+        this->data[i] += cls.data[i];
+    
+    return *this;
+}
+
+/**
+ * @brief Перегрузка оператора "+=" при сложении экземпляра класса MyVector с
+ * числом
+ * 
+ * @param[in] num Число, с которым происходит сложение
+ * @return Ссылка на экземпляр класса MyVector с результатом выполнения операции
+ */
+MyVector &MyVector::operator+=(const double num) {
+    for (int i = 0; i < this->sz; i++)
+        this->data[i] += num;
+    return *this;
+}
+
+/**
+ * @brief Перегрузка оператора "-=" при вычитании из экземпляра класса MyVector
+ * другого экземпляра
+ * 
+ * @param[in] cls Ссылка на экземпляр класса MyVector, который вычитают из исходного
+ * @return Ссылка на экземпляр класса MyVector с результатом выполнения операции
+ */
+MyVector &MyVector::operator-=(const MyVector &cls) {
+    if (this->sz != cls.sz)
+        throw std::length_error("operator+=(const MyVector &cls)");
+    
+    for (int i = 0; i < this->sz; i++)
+        this->data[i] -= cls.data[i];
+    
+    return *this;
+}
+
+/**
+ * @brief Перегрузка оператора "-=" при вычитании из экземпляра класса MyVector
+ * числа
+ * 
+ * @param[in] num Число, которое вычитают
+ * @return Ссылка на экземпляр класса MyVector с результатом выполнения операции
+ */
+MyVector &MyVector::operator-=(const double num) {
+    for (int i = 0; i < this->sz; i++)
+        this->data[i] -= num;
+    return *this;
+}
+
+/**
+ * @brief Перегрузка оператора "*=" при умножении экземпляра класса MyVector на
+ * другой экземпляр
+ * 
+ * @param[in] cls Ссылка на экземпляр класса MyVector, на который происходит умножение
+ * @return Ссылка на экземпляр класса MyVector с результатом выполнения операции
+ */
+MyVector &MyVector::operator*=(const MyVector &cls) {
+    if (this->sz != cls.sz)
+        throw std::length_error("operator+=(const MyVector &cls)");
+    
+    for (int i = 0; i < this->sz; i++)
+        this->data[i] *= cls.data[i];
+    
+    return *this;
+}
+
+/**
+ * @brief Перегрузка оператора "*=" при умножении экземпляра класса MyVector
+ * на число
+ * 
+ * @param[in] num Число, на которое происходит умножение
+ * @return Ссылка на экземпляр класса MyVector с результатом выполнения операции
+ */
+MyVector &MyVector::operator*=(const double num) {
+    for (int i = 0; i < this->sz; i++)
+        this->data[i] *= num;
+    return *this;
+}
+
+/**
+ * @brief Перегрузка оператора "/=" при делении экземпляра класса MyVector
+ * на другой экземпляр класса MyVector
+ * 
+ * @param[in] cls Ссылка на экземпляр класса MyVector, на который происходит деление
+ * @return Ссылка на экземпляр класса MyVector с результатом выполнения операции
+ */
+MyVector &MyVector::operator/=(const MyVector &cls) {
+    if (this->sz != cls.sz)
+        throw std::length_error("operator+=(const MyVector &cls)");
+    
+    for (int i = 0; i < this->sz; i++)
+        this->data[i] /= cls.data[i];
+    
+    return *this;
+}
+
+/**
+ * @brief Перегрузка оператора "/=" при делении экземпляра класса MyVector
+ * на число
+ * 
+ * @param[in] num Число, на которое происходит деление
+ * @return Ссылка на экземпляр класса MyVector с результатом выполнения операции
+ */
+MyVector &MyVector::operator/=(const double num) {
+    for (int i = 0; i < this->sz; i++)
+        this->data[i] /= num;
+    return *this;
 }
 
 /**
  * @brief Итератор класса MyVector (начальный)
  * 
- * @param[in] cls Ссылка на экземпляр класса
+ * @param[in] cls Ссылка на экземпляр класса MyVector
  * @return Итерируемое значение
  */
-uint8_t *MyVector::begin(void) const {
+double *MyVector::begin(void) const {
     return &this->data[0];
 }
 
 /**
  * @brief Итератор класса MyVector (конечный)
  * 
- * @param[in] cls Ссылка на экземпляр класса
+ * @param[in] cls Ссылка на экземпляр класса MyVector
  * @return Итерируемое значение
  */
-uint8_t *MyVector::end(void) const {
+double *MyVector::end(void) const {
     return &this->data[this->sz];
 }
 
 /**
- * @brief Перегрузка операции сложения
+ * @brief Перегрузка операции сложения экземпляров класса MyVector
  * 
- * @param[in] left Левый вектор
- * @param[in] right Правый вектор
- * @return Результирующий вектор
+ * @param[in] left Левый экземпляр класса MyVector
+ * @param[in] right Правый экземпляр класса MyVector
+ * @return Результирующий экземпляр класса MyVector
  */
 MyVector operator+(const MyVector &left, const MyVector &right) {
     if (left.size() != right.size())
@@ -170,15 +292,15 @@ MyVector operator+(const MyVector &left, const MyVector &right) {
 }
 
 /**
- * @brief Перегрузка операции вычитания
+ * @brief Перегрузка операции вычитания экземпляров класса MyVector
  * 
- * @param[in] left Левый вектор
- * @param[in] right Правый вектор
- * @return Результирующий вектор
+ * @param[in] left Левый экземпляр класса MyVector
+ * @param[in] right Правый экземпляр класса MyVector
+ * @return Результирующий экземпляр класса MyVector
  */
 MyVector operator-(const MyVector &left, const MyVector &right) {
     if (left.size() != right.size())
-        throw std::length_error("operator+(const MyVector &left, const MyVector &right)");
+        throw std::length_error("operator-(const MyVector &left, const MyVector &right)");
     
     MyVector res(left.size());
     for (int i = 0; i < left.size(); i++)
@@ -188,15 +310,15 @@ MyVector operator-(const MyVector &left, const MyVector &right) {
 }
 
 /**
- * @brief Перегрузка операции умножения
+ * @brief Перегрузка операции умножения экземпляров класса MyVector
  * 
- * @param[in] left Левый вектор
- * @param[in] right Правый вектор
- * @return Результирующий вектор
+ * @param[in] left Левый экземпляр класса MyVector
+ * @param[in] right Правый экземпляр класса MyVector
+ * @return Результирующий экземпляр класса MyVector
  */
 MyVector operator*(const MyVector &left, const MyVector &right) {
     if (left.size() != right.size())
-        throw std::length_error("operator+(const MyVector &left, const MyVector &right)");
+        throw std::length_error("operator*(const MyVector &left, const MyVector &right)");
     
     MyVector res(left.size());
     for (int i = 0; i < left.size(); i++)
@@ -206,15 +328,15 @@ MyVector operator*(const MyVector &left, const MyVector &right) {
 }
 
 /**
- * @brief Перегрузка операции деления
+ * @brief Перегрузка операции деления экземпляров класса MyVector
  * 
- * @param[in] left Левый вектор
- * @param[in] right Правый вектор
- * @return Результирующий вектор
+ * @param[in] left Левый экземпляр класса MyVector
+ * @param[in] right Правый экземпляр класса MyVector
+ * @return Результирующий экземпляр класса MyVector
  */
 MyVector operator/(const MyVector &left, const MyVector &right) {
     if (left.size() != right.size())
-        throw std::length_error("operator+(const MyVector &left, const MyVector &right)");
+        throw std::length_error("operator/(const MyVector &left, const MyVector &right)");
     
     MyVector res(left.size());
     for (int i = 0; i < left.size(); i++)
@@ -224,19 +346,122 @@ MyVector operator/(const MyVector &left, const MyVector &right) {
 }
 
 /**
- * @brief Перегрузка операции взятия остатка от деления
+ * @brief Перегрузка оператора сложения экземпляра класса MyVector и числа
  * 
- * @param[in] left Левый вектор
- * @param[in] right Правый вектор
- * @return Результирующий вектор
+ * @param[in] cls Ссылка на экземпляр класса MyVector
+ * @param[in] num Число, с которым происходит сложение
+ * @return Экземпляр класса MyVector, который является результатом
+ * вычисления выражения
  */
-MyVector operator%(const MyVector &left, const MyVector &right) {
-    if (left.size() != right.size())
-        throw std::length_error("operator+(const MyVector &left, const MyVector &right)");
+MyVector operator+(const MyVector &cls, const double num) {
+    MyVector res(cls);
+    for (int i = 0; i < res.size(); i++)
+        res[i] += num;
     
-    MyVector res(left.size());
-    for (int i = 0; i < left.size(); i++)
-        res[i] = left[i] % right[i];
+    return std::move(res);
+}
 
+/**
+ * @brief Перегрузка оператора сложения числа и экземпляра класса MyVector
+ * 
+ * @param[in] num Число
+ * @param[in] cls Ссылка на экземпляр класса MyVector,
+ * с которым происходит сложение
+ * @return Экземпляр класса MyVector, который является результатом
+ * вычисления выражения
+ */
+MyVector operator+(const double num, const MyVector &cls) {
+    return std::move(cls + num);
+}
+
+/**
+ * @brief Перегрузка оператора вычитания числа из экземпляра класса MyVector
+ * 
+ * @param[in] cls Ссылка на экземпляр класса MyVector
+ * @param[in] num Число, которое вычитаем
+ * @return Экземпляр класса MyVector, который является результатом
+ * вычисления выражения
+ */
+MyVector operator-(const MyVector &cls, const double num) {
+    MyVector res(cls);
+    for (int i = 0; i < res.size(); i++)
+        res[i] -= num;
+    
+    return std::move(res);
+}
+
+/**
+ * @brief Перегрузка оператора вычитания экземпляра класса MyVector из числа
+ * 
+ * @param[in] num Число, из которого вычитаем 
+ * @param[in] cls Ссылка на экземпляр класса MyVector
+ * @return Экземпляр класса MyVector, который является результатом
+ * вычисления выражения
+ */
+MyVector operator-(const double num, const MyVector &cls) {
+    MyVector res(cls);
+    for (int i = 0; i < res.size(); i++)
+        res[i] = num - res[i];
+    
+    return std::move(res);
+}
+
+/**
+ * @brief Перегрузка оператора умножения экземпляра класса MyVector на число
+ * 
+ * @param[in] cls Ссылка на экземпляр класса MyVector
+ * @param[in] num Число, на которое происходит умножение
+ * @return Экземпляр класса MyVector, который является результатом
+ * вычисления выражения
+ */
+MyVector operator*(const MyVector &cls, const double num) {
+    MyVector res(cls);
+    for (int i = 0; i < res.size(); i++)
+        res[i] *= num;
+    
+    return std::move(res);
+}
+
+/**
+ * @brief Перегрузка оператора умножения числа на экземпляра класса MyVector
+ * 
+ * @param[in] num Число
+ * @param[in] cls Ссылка на экземпляр класса MyVector
+ * @return Экземпляр класса MyVector, который является результатом
+ * вычисления выражения
+ */
+MyVector operator*(const double num, const MyVector &cls) {
+    return std::move(cls * num);
+}
+
+/**
+ * @brief Перегрузка оператора деления экземпляра класса MyVector на число
+ * 
+ * @param[in] cls Ссылка на экземпляр класса MyVector
+ * @param[in] num Число, на которое происходит деление
+ * @return Экземпляр класса MyVector, который является результатом
+ * вычисления выражения
+ */
+MyVector operator/(const MyVector &cls, const double num) {
+    MyVector res(cls);
+    for (int i = 0; i < res.size(); i++)
+        res[i] /= num;
+    
+    return std::move(res);
+}
+
+/**
+ * @brief Перегрузка оператора деления числа на экземпляр класса MyVector
+ * 
+ * @param[in] num Число
+ * @param[in] cls Ссылка на экземпляр класса MyVector
+ * @return Экземпляр класса MyVector, который является результатом
+ * вычисления выражения
+ */
+MyVector operator/(const double num, const MyVector &cls) {
+    MyVector res(cls);
+    for (int i = 0; i < res.size(); i++)
+        res[i] = num / res[i];
+    
     return std::move(res);
 }

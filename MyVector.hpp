@@ -9,7 +9,7 @@
 class MyVector {
 private:
     int sz;         ///< Размер вектора
-    uint8_t *data;  ///< Данные векторы
+    double *data;   ///< Данные векторы
 public:
     MyVector(void);
     explicit MyVector(int n);
@@ -21,19 +21,36 @@ public:
 
     MyVector &operator=(const MyVector &cls);
     MyVector &operator=(MyVector &&cls);
-    uint8_t &operator[](int i);
-    const uint8_t &operator[](int i) const;
+    double &operator[](int i);
+    const double &operator[](int i) const;
     friend std::ostream &operator<<(std::ostream &out, const MyVector &cls);
+
+    MyVector &operator+=(const MyVector &cls);
+    MyVector &operator+=(const double num);
+    MyVector &operator-=(const MyVector &cls);
+    MyVector &operator-=(const double num);
+    MyVector &operator*=(const MyVector &cls);
+    MyVector &operator*=(const double num);
+    MyVector &operator/=(const MyVector &cls);
+    MyVector &operator/=(const double num);
     
-    uint8_t *begin(void) const;
-    uint8_t *end(void) const;
+    double *begin(void) const;
+    double *end(void) const;
 };
 
 MyVector operator+(const MyVector &left, const MyVector &right);
 MyVector operator-(const MyVector &left, const MyVector &right);
 MyVector operator*(const MyVector &left, const MyVector &right);
 MyVector operator/(const MyVector &left, const MyVector &right);
-MyVector operator%(const MyVector &left, const MyVector &right);
+
+MyVector operator+(const MyVector &cls, const double num);
+MyVector operator+(const double num, const MyVector &cls);
+MyVector operator-(const MyVector &cls, const double num);
+MyVector operator-(const double num, const MyVector &cls);
+MyVector operator*(const MyVector &cls, const double num);
+MyVector operator*(const double num, const MyVector &cls);
+MyVector operator/(const MyVector &cls, const double num);
+MyVector operator/(const double num, const MyVector &cls);
 
 
 #endif /* __MY_VECTOR_HPP__ */
