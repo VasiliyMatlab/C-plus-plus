@@ -23,7 +23,6 @@ public:
     MyVector &operator=(MyVector &&cls);
     double &operator[](int i);
     const double &operator[](int i) const;
-    friend std::ostream &operator<<(std::ostream &out, const MyVector &cls);
 
     MyVector &operator+=(const MyVector &cls);
     MyVector &operator+=(const double num);
@@ -33,10 +32,18 @@ public:
     MyVector &operator*=(const double num);
     MyVector &operator/=(const MyVector &cls);
     MyVector &operator/=(const double num);
-    
+
+    MyVector &operator++(void);
+    MyVector operator++(int);
+    MyVector &operator--(void);
+    MyVector operator--(int);
+
     double *begin(void) const;
     double *end(void) const;
 };
+
+std::ostream &operator<<(std::ostream &out, const MyVector &cls);
+std::istream &operator>>(std::istream &in, MyVector &cls);
 
 MyVector operator+(const MyVector &left, const MyVector &right);
 MyVector operator-(const MyVector &left, const MyVector &right);

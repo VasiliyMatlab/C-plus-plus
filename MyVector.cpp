@@ -117,23 +117,6 @@ const double &MyVector::operator[](int i) const {
 }
 
 /**
- * @brief Перегрузка вставки в текстовый поток
- * 
- * @param[in] out Ссылка на входящий текстовый поток
- * @param[in] cls Ссылка на экземпляр класса MyVector
- * @return Ссылка на исходящий текстовый поток
- */
-std::ostream &operator<<(std::ostream &out, const MyVector &cls) {
-    out << "Size: " << cls.sz << std::endl;
-    out << "Data: [";
-    if (cls.sz == 0)
-        return out << "]" << std::endl;
-    for (const auto &x: cls)
-        out << x << ", ";
-    return out << "\b\b]" << std::endl;
-}
-
-/**
  * @brief Перегрузка оператора "+=" при сложении экземпляра класса MyVector с
  * другим экземпляром
  * 
@@ -254,6 +237,50 @@ MyVector &MyVector::operator/=(const double num) {
 }
 
 /**
+ * @brief Перегрузка операции инкремента (префикс)
+ * 
+ * @return Ссылка на экземпляр класса MyVector
+ */
+MyVector &MyVector::operator++(void) {
+    for (auto &x: *this)
+        x++;
+    return *this;
+}
+
+/**
+ * @brief Перегрузка операции инкремента (постфикс)
+ * 
+ * @return Экземпляр класса MyVector
+ */
+MyVector MyVector::operator++(int) {
+    MyVector tmp(*this);
+    ++(*this);
+    return tmp;
+}
+
+/**
+ * @brief Перегрузка операции декремента (префикс)
+ * 
+ * @return Ссылка на экземпляр класса MyVector
+ */
+MyVector &MyVector::operator--(void) {
+    for (auto &x: *this)
+        x--;
+    return *this;
+}
+
+/**
+ * @brief Перегрузка операции декремента (постфикс)
+ * 
+ * @return Экземпляр класса MyVector
+ */
+MyVector MyVector::operator--(int) {
+    MyVector tmp(*this);
+    --(*this);
+    return tmp;
+}
+
+/**
  * @brief Итератор класса MyVector (начальный)
  * 
  * @param[in] cls Ссылка на экземпляр класса MyVector
@@ -271,6 +298,38 @@ double *MyVector::begin(void) const {
  */
 double *MyVector::end(void) const {
     return &this->data[this->sz];
+}
+
+/**
+ * @brief Перегрузка вставки в выходящий поток
+ * 
+ * @param[in,out] out Ссылка на выходящий поток
+ * @param[in] cls Ссылка на экземпляр класса MyVector
+ * @return Ссылка на выходящий поток
+ */
+std::ostream &operator<<(std::ostream &out, const MyVector &cls) {
+    out << "Size: " << cls.size() << std::endl;
+    out << "Data: [";
+    if (cls.size() == 0)
+        return out << "]" << std::endl;
+    for (const auto &x: cls)
+        out << x << ", ";
+    return out << "\b\b]" << std::endl;
+}
+
+/**
+ * @brief Перегрузка чтения из входящего потока
+ * 
+ * @param[in,out] in Ссылка на входящий поток
+ * @param[in,out] cls Ссылка на экземпляр класса MyVector
+ * @return Ссылка на входящий поток
+ */
+std::istream &operator>>(std::istream &in, MyVector &cls) {
+    if (cls.size() == 0)
+        return in;
+    for (auto &x: cls)
+        in >> x;
+    return in;
 }
 
 /**
