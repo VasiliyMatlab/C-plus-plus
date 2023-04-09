@@ -281,6 +281,28 @@ MyVector MyVector::operator--(int) {
 }
 
 /**
+ * @brief Перегрузка операции унарного минуса
+ * 
+ * @return Экземпляр класса MyVector
+ */
+MyVector MyVector::operator-(void) const {
+    MyVector tmp(*this);
+    for (auto &x: tmp)
+        x = -x;
+    return tmp;
+}
+
+/**
+ * @brief Перегрузка операции унарного плюса
+ * 
+ * @return Экземпляр класса MyVector
+ */
+MyVector MyVector::operator+(void) const {
+    MyVector tmp(*this);
+    return tmp;
+}
+
+/**
  * @brief Итератор класса MyVector (начальный)
  * 
  * @param[in] cls Ссылка на экземпляр класса MyVector
