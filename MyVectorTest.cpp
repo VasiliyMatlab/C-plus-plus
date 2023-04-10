@@ -62,3 +62,25 @@ BOOST_AUTO_TEST_CASE(destructor) {
     k.~MyVector();
     BOOST_REQUIRE_EQUAL(k.size(), 0);
 }
+
+// Проверка оператора копирующего присваивания
+BOOST_AUTO_TEST_CASE(copying_assignment) {
+    MyVector k1 = {-10, 11, 7, -2.7, 4};
+    MyVector k2;
+    k2 = k1;
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    for (int i = 0; i < k1.size(); i++)
+        BOOST_CHECK_EQUAL(k1[i], k2[i]);
+}
+
+// Проверка оператора перемещающего присваивания
+BOOST_AUTO_TEST_CASE(moving_assignment) {
+    MyVector k1 = {-23.1, 0.9923, 3, -17};
+    MyVector k2 = k1;
+    MyVector k3;
+    k3 = std::move(k1);
+    BOOST_REQUIRE_EQUAL(k1.size(), 0);
+    BOOST_REQUIRE_EQUAL(k2.size(), k3.size());
+    for (int i = 0; i < k2.size(); i++)
+        BOOST_CHECK_EQUAL(k3[i], k2[i]);
+}
