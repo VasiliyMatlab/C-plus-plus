@@ -19,6 +19,15 @@ MyVector::MyVector(int n): sz(n), data(new double[n]) {
 }
 
 /**
+ * @brief Конструктор класса MyVector
+ * 
+ * @param[in] lst Инициализирующий список
+ */
+MyVector::MyVector(const std::initializer_list<double> &lst): sz(lst.size()), data(new double[lst.size()]) {
+    std::copy(lst.begin(), lst.end(), data);
+}
+
+/**
  * @brief Копирующий конструктор класса MyVector
  * 
  * @param[in] cls Ссылка на экземпляр класса MyVector, откуда происходит копирование

@@ -13,6 +13,7 @@ private:
 public:
     MyVector(void);
     explicit MyVector(int n);
+    MyVector(const std::initializer_list<double> &lst);
     MyVector(const MyVector &cls);
     MyVector(MyVector &&cls);
     ~MyVector(void);
