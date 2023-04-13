@@ -84,3 +84,42 @@ BOOST_AUTO_TEST_CASE(moving_assignment) {
     for (int i = 0; i < k2.size(); i++)
         BOOST_CHECK_EQUAL(k3[i], k2[i]);
 }
+
+// Проверка операторов begin и end
+BOOST_AUTO_TEST_CASE(begin_end) {
+    MyVector k1 = {0.4, 3, -2, 1};
+    MyVector k2 = k1;
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    int i = 0;
+    for (auto x = std::begin(k1); x != std::end(k1); ++x, i++)
+        BOOST_CHECK_EQUAL(*x, k2[i]);
+    i = 0;
+    for (auto &x: k1) {
+        BOOST_CHECK_EQUAL(x, k2[i]);
+        i++;
+    }
+}
+
+// Проверка оператора унарного плюса
+BOOST_AUTO_TEST_CASE(unary_plus) {
+    MyVector k1 = {1, -2, 3, -4};
+    MyVector k2 = +k1;
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    for (int i = 0; i < k1.size(); i++)
+        BOOST_CHECK_EQUAL(k1[i], k2[i]);
+    k2[0] = 2;
+    k2[1] = 3;
+    k2[2] = -4;
+    k2[3] = -5;
+    for (int i = 0; i < k1.size(); i++)
+        BOOST_CHECK_NE(k1[i], k2[i]);
+}
+
+// Проверка оператора унарного минуса
+BOOST_AUTO_TEST_CASE(unary_minus) {
+    MyVector k1 = {1, -2, 3, -4};
+    MyVector k2 = -k1;
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    for (int i = 0; i < k1.size(); i++)
+        BOOST_CHECK_EQUAL(k1[i], -k2[i]);
+}
