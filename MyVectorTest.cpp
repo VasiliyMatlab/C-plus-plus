@@ -101,7 +101,7 @@ BOOST_AUTO_TEST_CASE(begin_end) {
 }
 
 // Проверка оператора унарного плюса
-BOOST_AUTO_TEST_CASE(unary_plus) {
+BOOST_AUTO_TEST_CASE(unary_add) {
     MyVector k1 = {1, -2, 3, -4};
     MyVector k2 = +k1;
     BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
@@ -116,7 +116,7 @@ BOOST_AUTO_TEST_CASE(unary_plus) {
 }
 
 // Проверка оператора унарного минуса
-BOOST_AUTO_TEST_CASE(unary_minus) {
+BOOST_AUTO_TEST_CASE(unary_sub) {
     MyVector k1 = {1, -2, 3, -4};
     MyVector k2 = -k1;
     BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
@@ -162,4 +162,100 @@ BOOST_AUTO_TEST_CASE(dec_postfix) {
     BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
     for (int i = 0; i < k1.size(); i++)
         BOOST_CHECK_EQUAL(k1[i], k2[i] - 1);
+}
+
+// Проверка оператора += MyVector
+BOOST_AUTO_TEST_CASE(operation_add_equally_MyVector) {
+    MyVector k1 = {0, 1, 2, 3, 4};
+    MyVector k2 = {1, 2, 3, 4, 5};
+    MyVector k3 = k2;
+    k2 += k1;
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    BOOST_REQUIRE_EQUAL(k1.size(), k3.size());
+    for (int i = 0; i < k1.size(); i++) {
+        BOOST_CHECK_EQUAL(k1[i], i);
+        BOOST_CHECK_EQUAL(k2[i] - k1[i], k3[i]);
+    }
+}
+
+// Проверка оператора -= MyVector
+BOOST_AUTO_TEST_CASE(operation_sub_equally_MyVector) {
+    MyVector k1 = {0, 1, 2, 3, 4};
+    MyVector k2 = {1, 2, 3, 4, 5};
+    MyVector k3 = k2;
+    k2 -= k1;
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    BOOST_REQUIRE_EQUAL(k1.size(), k3.size());
+    for (int i = 0; i < k1.size(); i++) {
+        BOOST_CHECK_EQUAL(k1[i], i);
+        BOOST_CHECK_EQUAL(k2[i] + k1[i], k3[i]);
+    }
+}
+
+// Проверка оператора *= MyVector
+BOOST_AUTO_TEST_CASE(operation_mul_equally_MyVector) {
+    MyVector k1 = {1, 2, 3, 4, 5};
+    MyVector k2 = {2, 3, 4, 5, 6};
+    MyVector k3 = k2;
+    k2 *= k1;
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    BOOST_REQUIRE_EQUAL(k1.size(), k3.size());
+    for (int i = 0; i < k1.size(); i++) {
+        BOOST_CHECK_EQUAL(k1[i], i + 1);
+        BOOST_CHECK_EQUAL(k2[i] / k1[i], k3[i]);
+    }
+}
+
+// Проверка оператора /= MyVector
+BOOST_AUTO_TEST_CASE(operation_div_equally_MyVector) {
+    MyVector k1 = {1, 2, 3, 4, 5};
+    MyVector k2 = {2, 3, 4, 5, 6};
+    MyVector k3 = k2;
+    k2 /= k1;
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    BOOST_REQUIRE_EQUAL(k1.size(), k3.size());
+    for (int i = 0; i < k1.size(); i++) {
+        BOOST_CHECK_EQUAL(k1[i], i + 1);
+        BOOST_CHECK_EQUAL(k2[i] * k1[i], k3[i]);
+    }
+}
+
+// Проверка оператора += double
+BOOST_AUTO_TEST_CASE(operation_add_equally_double) {
+    MyVector k1 = {10, 20, 30, 40, 50};
+    MyVector k2 = k1;
+    double num  = 3.2;
+    k1 += num;
+    for (int i = 0; i < k1.size(); i++)
+        BOOST_CHECK_EQUAL(k2[i] + num, k1[i]);
+}
+
+// Проверка оператора -= double
+BOOST_AUTO_TEST_CASE(operation_sub_equally_double) {
+    MyVector k1 = {10, 20, 30, 40, 50};
+    MyVector k2 = k1;
+    double num  = 3.2;
+    k1 -= num;
+    for (int i = 0; i < k1.size(); i++)
+        BOOST_CHECK_EQUAL(k2[i] - num, k1[i]);
+}
+
+// Проверка оператора *= double
+BOOST_AUTO_TEST_CASE(operation_mul_equally_double) {
+    MyVector k1 = {10, 20, 30, 40, 50};
+    MyVector k2 = k1;
+    double num  = 3.2;
+    k1 *= num;
+    for (int i = 0; i < k1.size(); i++)
+        BOOST_CHECK_EQUAL(k2[i] * num, k1[i]);
+}
+
+// Проверка оператора /= double
+BOOST_AUTO_TEST_CASE(operation_div_equally_double) {
+    MyVector k1 = {10, 20, 30, 40, 50};
+    MyVector k2 = k1;
+    double num  = 3.2;
+    k1 /= num;
+    for (int i = 0; i < k1.size(); i++)
+        BOOST_CHECK_EQUAL(k2[i] / num, k1[i]);
 }
