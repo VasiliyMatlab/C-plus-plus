@@ -123,3 +123,43 @@ BOOST_AUTO_TEST_CASE(unary_minus) {
     for (int i = 0; i < k1.size(); i++)
         BOOST_CHECK_EQUAL(k1[i], -k2[i]);
 }
+
+// Проверка оператора инкремента (префикс)
+BOOST_AUTO_TEST_CASE(inc_prefix) {
+    MyVector k1 = {0, 1, 2, 3, 4};
+    MyVector k2 = ++k1;
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    for (int i = 0; i < k1.size(); i++) {
+        BOOST_CHECK_EQUAL(k1[i], i + 1);
+        BOOST_CHECK_EQUAL(k2[i], i + 1);
+    }
+}
+
+// Проверка оператора инкремента (постфикс)
+BOOST_AUTO_TEST_CASE(inc_postfix) {
+    MyVector k1 = {0, 1, 2, 3, 4};
+    MyVector k2 = k1++;
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    for (int i = 0; i < k1.size(); i++)
+        BOOST_CHECK_EQUAL(k1[i], k2[i] + 1);
+}
+
+// Проверка оператора декремента (префикс)
+BOOST_AUTO_TEST_CASE(dec_prefix) {
+    MyVector k1 = {0, 1, 2, 3, 4};
+    MyVector k2 = --k1;
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    for (int i = 0; i < k1.size(); i++) {
+        BOOST_CHECK_EQUAL(k1[i], i - 1);
+        BOOST_CHECK_EQUAL(k2[i], i - 1);
+    }
+}
+
+// Проверка оператора декремента (постфикс)
+BOOST_AUTO_TEST_CASE(dec_postfix) {
+    MyVector k1 = {0, 1, 2, 3, 4};
+    MyVector k2 = k1--;
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    for (int i = 0; i < k1.size(); i++)
+        BOOST_CHECK_EQUAL(k1[i], k2[i] - 1);
+}
