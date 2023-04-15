@@ -176,6 +176,9 @@ BOOST_AUTO_TEST_CASE(operation_add_equally_MyVector) {
         BOOST_CHECK_EQUAL(k1[i], i);
         BOOST_CHECK_EQUAL(k2[i] - k1[i], k3[i]);
     }
+
+    MyVector k4 = {4, 5, 6};
+    BOOST_CHECK_THROW(k1 += k4, std::length_error);
 }
 
 // Проверка оператора -= MyVector
@@ -190,6 +193,9 @@ BOOST_AUTO_TEST_CASE(operation_sub_equally_MyVector) {
         BOOST_CHECK_EQUAL(k1[i], i);
         BOOST_CHECK_EQUAL(k2[i] + k1[i], k3[i]);
     }
+
+    MyVector k4 = {4, 5, 6};
+    BOOST_CHECK_THROW(k1 -= k4, std::length_error);
 }
 
 // Проверка оператора *= MyVector
@@ -204,6 +210,9 @@ BOOST_AUTO_TEST_CASE(operation_mul_equally_MyVector) {
         BOOST_CHECK_EQUAL(k1[i], i + 1);
         BOOST_CHECK_EQUAL(k2[i] / k1[i], k3[i]);
     }
+
+    MyVector k4 = {4, 5, 6};
+    BOOST_CHECK_THROW(k1 *= k4, std::length_error);
 }
 
 // Проверка оператора /= MyVector
@@ -218,6 +227,9 @@ BOOST_AUTO_TEST_CASE(operation_div_equally_MyVector) {
         BOOST_CHECK_EQUAL(k1[i], i + 1);
         BOOST_CHECK_EQUAL(k2[i] * k1[i], k3[i]);
     }
+
+    MyVector k4 = {4, 5, 6};
+    BOOST_CHECK_THROW(k1 /= k4, std::length_error);
 }
 
 // Проверка оператора += double
@@ -226,6 +238,7 @@ BOOST_AUTO_TEST_CASE(operation_add_equally_double) {
     MyVector k2 = k1;
     double num  = 3.2;
     k1 += num;
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
     for (int i = 0; i < k1.size(); i++)
         BOOST_CHECK_EQUAL(k2[i] + num, k1[i]);
 }
@@ -236,6 +249,7 @@ BOOST_AUTO_TEST_CASE(operation_sub_equally_double) {
     MyVector k2 = k1;
     double num  = 3.2;
     k1 -= num;
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
     for (int i = 0; i < k1.size(); i++)
         BOOST_CHECK_EQUAL(k2[i] - num, k1[i]);
 }
@@ -246,6 +260,7 @@ BOOST_AUTO_TEST_CASE(operation_mul_equally_double) {
     MyVector k2 = k1;
     double num  = 3.2;
     k1 *= num;
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
     for (int i = 0; i < k1.size(); i++)
         BOOST_CHECK_EQUAL(k2[i] * num, k1[i]);
 }
@@ -256,6 +271,63 @@ BOOST_AUTO_TEST_CASE(operation_div_equally_double) {
     MyVector k2 = k1;
     double num  = 3.2;
     k1 /= num;
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
     for (int i = 0; i < k1.size(); i++)
         BOOST_CHECK_EQUAL(k2[i] / num, k1[i]);
+}
+
+// Проверка оператора MyVector + MyVector
+BOOST_AUTO_TEST_CASE(operation_add_MyVector) {
+    MyVector k1 = {1.2, -44, 5, -7, -11};
+    MyVector k2 = {0.1, 90.9, -81, 3, 2};
+    MyVector k3 = k1 + k2;
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    BOOST_REQUIRE_EQUAL(k1.size(), k3.size());
+    for (int i = 0; i < k1.size(); i++)
+        BOOST_CHECK_EQUAL(k1[i] + k2[i], k3[i]);
+
+    MyVector k4 = {1, 2, 3};
+    BOOST_CHECK_THROW(k1 + k4, std::length_error);
+}
+
+// Проверка оператора MyVector - MyVector
+BOOST_AUTO_TEST_CASE(operation_sub_MyVector) {
+    MyVector k1 = {1.2, -44, 5, -7, -11};
+    MyVector k2 = {0.1, 90.9, -81, 3, 2};
+    MyVector k3 = k1 - k2;
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    BOOST_REQUIRE_EQUAL(k1.size(), k3.size());
+    for (int i = 0; i < k1.size(); i++)
+        BOOST_CHECK_EQUAL(k1[i] - k2[i], k3[i]);
+
+    MyVector k4 = {1, 2, 3};
+    BOOST_CHECK_THROW(k1 - k4, std::length_error);
+}
+
+// Проверка оператора MyVector * MyVector
+BOOST_AUTO_TEST_CASE(operation_mul_MyVector) {
+    MyVector k1 = {1.2, -44, 5, -7, -11};
+    MyVector k2 = {0.1, 90.9, -81, 3, 2};
+    MyVector k3 = k1 * k2;
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    BOOST_REQUIRE_EQUAL(k1.size(), k3.size());
+    for (int i = 0; i < k1.size(); i++)
+        BOOST_CHECK_EQUAL(k1[i] * k2[i], k3[i]);
+
+    MyVector k4 = {1, 2, 3};
+    BOOST_CHECK_THROW(k1 * k4, std::length_error);
+}
+
+// Проверка оператора MyVector / MyVector
+BOOST_AUTO_TEST_CASE(operation_div_MyVector) {
+    MyVector k1 = {1.2, -44, 5, -7, -11};
+    MyVector k2 = {0.1, 90.9, -81, 3, 2};
+    MyVector k3 = k1 / k2;
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    BOOST_REQUIRE_EQUAL(k1.size(), k3.size());
+    for (int i = 0; i < k1.size(); i++)
+        BOOST_CHECK_EQUAL(k1[i] / k2[i], k3[i]);
+
+    MyVector k4 = {1, 2, 3};
+    BOOST_CHECK_THROW(k1 / k4, std::length_error);
 }
