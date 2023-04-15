@@ -178,6 +178,7 @@ BOOST_AUTO_TEST_CASE(operation_add_equally_MyVector) {
     }
 
     MyVector k4 = {4, 5, 6};
+    BOOST_REQUIRE_NE(k1.size(), k4.size());
     BOOST_CHECK_THROW(k1 += k4, std::length_error);
 }
 
@@ -195,6 +196,7 @@ BOOST_AUTO_TEST_CASE(operation_sub_equally_MyVector) {
     }
 
     MyVector k4 = {4, 5, 6};
+    BOOST_REQUIRE_NE(k1.size(), k4.size());
     BOOST_CHECK_THROW(k1 -= k4, std::length_error);
 }
 
@@ -212,6 +214,7 @@ BOOST_AUTO_TEST_CASE(operation_mul_equally_MyVector) {
     }
 
     MyVector k4 = {4, 5, 6};
+    BOOST_REQUIRE_NE(k1.size(), k4.size());
     BOOST_CHECK_THROW(k1 *= k4, std::length_error);
 }
 
@@ -229,6 +232,7 @@ BOOST_AUTO_TEST_CASE(operation_div_equally_MyVector) {
     }
 
     MyVector k4 = {4, 5, 6};
+    BOOST_REQUIRE_NE(k1.size(), k4.size());
     BOOST_CHECK_THROW(k1 /= k4, std::length_error);
 }
 
@@ -287,6 +291,7 @@ BOOST_AUTO_TEST_CASE(operation_add_MyVector) {
         BOOST_CHECK_EQUAL(k1[i] + k2[i], k3[i]);
 
     MyVector k4 = {1, 2, 3};
+    BOOST_REQUIRE_NE(k1.size(), k4.size());
     BOOST_CHECK_THROW(k1 + k4, std::length_error);
 }
 
@@ -301,6 +306,7 @@ BOOST_AUTO_TEST_CASE(operation_sub_MyVector) {
         BOOST_CHECK_EQUAL(k1[i] - k2[i], k3[i]);
 
     MyVector k4 = {1, 2, 3};
+    BOOST_REQUIRE_NE(k1.size(), k4.size());
     BOOST_CHECK_THROW(k1 - k4, std::length_error);
 }
 
@@ -315,6 +321,7 @@ BOOST_AUTO_TEST_CASE(operation_mul_MyVector) {
         BOOST_CHECK_EQUAL(k1[i] * k2[i], k3[i]);
 
     MyVector k4 = {1, 2, 3};
+    BOOST_REQUIRE_NE(k1.size(), k4.size());
     BOOST_CHECK_THROW(k1 * k4, std::length_error);
 }
 
@@ -329,6 +336,7 @@ BOOST_AUTO_TEST_CASE(operation_div_MyVector) {
         BOOST_CHECK_EQUAL(k1[i] / k2[i], k3[i]);
 
     MyVector k4 = {1, 2, 3};
+    BOOST_REQUIRE_NE(k1.size(), k4.size());
     BOOST_CHECK_THROW(k1 / k4, std::length_error);
 }
 
