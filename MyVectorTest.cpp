@@ -331,3 +331,71 @@ BOOST_AUTO_TEST_CASE(operation_div_MyVector) {
     MyVector k4 = {1, 2, 3};
     BOOST_CHECK_THROW(k1 / k4, std::length_error);
 }
+
+// Проверка оператора MyVector + double и double + MyVector
+BOOST_AUTO_TEST_CASE(operation_MyVector_add_double) {
+    MyVector k1 = {9, 3.4, -2, 1, 999.999};
+    MyVector k2 = k1;
+    double num  = 0.17;
+    MyVector k3 = k1 + num;
+    MyVector k4 = num + k1;
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    BOOST_REQUIRE_EQUAL(k1.size(), k3.size());
+    BOOST_REQUIRE_EQUAL(k1.size(), k4.size());
+    for (int i = 0; i < k1.size(); i++) {
+        BOOST_CHECK_EQUAL(k1[i], k2[i]);
+        BOOST_CHECK_EQUAL(k1[i] + num, k3[i]);
+        BOOST_CHECK_EQUAL(num + k1[i], k4[i]);
+    }
+}
+
+// Проверка оператора MyVector - double и double - MyVector
+BOOST_AUTO_TEST_CASE(operation_MyVector_sub_double) {
+    MyVector k1 = {9, 3.4, -2, 1, 999.999};
+    MyVector k2 = k1;
+    double num  = 0.17;
+    MyVector k3 = k1 - num;
+    MyVector k4 = num - k1;
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    BOOST_REQUIRE_EQUAL(k1.size(), k3.size());
+    BOOST_REQUIRE_EQUAL(k1.size(), k4.size());
+    for (int i = 0; i < k1.size(); i++) {
+        BOOST_CHECK_EQUAL(k1[i], k2[i]);
+        BOOST_CHECK_EQUAL(k1[i] - num, k3[i]);
+        BOOST_CHECK_EQUAL(num - k1[i], k4[i]);
+    }
+}
+
+// Проверка оператора MyVector * double и double * MyVector
+BOOST_AUTO_TEST_CASE(operation_MyVector_mul_double) {
+    MyVector k1 = {9, 3.4, -2, 1, 999.999};
+    MyVector k2 = k1;
+    double num  = 0.17;
+    MyVector k3 = k1 * num;
+    MyVector k4 = num * k1;
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    BOOST_REQUIRE_EQUAL(k1.size(), k3.size());
+    BOOST_REQUIRE_EQUAL(k1.size(), k4.size());
+    for (int i = 0; i < k1.size(); i++) {
+        BOOST_CHECK_EQUAL(k1[i], k2[i]);
+        BOOST_CHECK_EQUAL(k1[i] * num, k3[i]);
+        BOOST_CHECK_EQUAL(num * k1[i], k4[i]);
+    }
+}
+
+// Проверка оператора MyVector / double и double / MyVector
+BOOST_AUTO_TEST_CASE(operation_MyVector_div_double) {
+    MyVector k1 = {9, 3.4, -2, 1, 999.999};
+    MyVector k2 = k1;
+    double num  = 0.17;
+    MyVector k3 = k1 / num;
+    MyVector k4 = num / k1;
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    BOOST_REQUIRE_EQUAL(k1.size(), k3.size());
+    BOOST_REQUIRE_EQUAL(k1.size(), k4.size());
+    for (int i = 0; i < k1.size(); i++) {
+        BOOST_CHECK_EQUAL(k1[i], k2[i]);
+        BOOST_CHECK_EQUAL(k1[i] / num, k3[i]);
+        BOOST_CHECK_EQUAL(num / k1[i], k4[i]);
+    }
+}
