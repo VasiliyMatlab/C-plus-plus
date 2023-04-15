@@ -42,6 +42,8 @@ public:
     MyVector operator-(void) const;
     MyVector operator+(void) const;
 
+    MyVector operator!(void) const;
+
     double *begin(void) const;
     double *end(void) const;
 };

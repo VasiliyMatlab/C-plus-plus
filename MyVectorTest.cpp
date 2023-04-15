@@ -407,3 +407,14 @@ BOOST_AUTO_TEST_CASE(operation_MyVector_div_double) {
         BOOST_CHECK_EQUAL(num / k1[i], k4[i]);
     }
 }
+
+// Проверка оператора отрицания
+BOOST_AUTO_TEST_CASE(operator_negation) {
+    MyVector k1 = {1, 0, -2, 4, 9.99};
+    MyVector k2 = !k1;
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    for (int i = 0; i < k1.size(); i++) {
+        BOOST_CHECK_NE(k1[i], k2[i]);
+        BOOST_CHECK_EQUAL(k2[i], !k1[i]);
+    }
+}

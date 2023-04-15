@@ -312,6 +312,18 @@ MyVector MyVector::operator+(void) const {
 }
 
 /**
+ * @brief Перегрузка операции отрицания
+ * 
+ * @return Экземпляр класса MyVector
+ */
+MyVector MyVector::operator!(void) const {
+    MyVector tmp(*this);
+    for (int i = 0; i < tmp.size(); i++)
+        tmp[i] = !tmp[i];
+    return std::move(tmp);
+}
+
+/**
  * @brief Итератор класса MyVector (начальный)
  * 
  * @param[in] cls Ссылка на экземпляр класса MyVector
