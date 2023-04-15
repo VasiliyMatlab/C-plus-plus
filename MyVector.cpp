@@ -567,3 +567,81 @@ MyVector operator/(const double num, const MyVector &cls) {
     
     return std::move(res);
 }
+
+/**
+ * @brief Перегрузка оператора проверки на равенство двух экземпляров класса MyVector
+ * 
+ * @param[in] left Левый экземпляр класса MyVector
+ * @param[in] right Правый экземпляр класса MyVector
+ * @return Результирующий экземпляр класса MyVector
+ */
+MyVector operator==(const MyVector &left, const MyVector &right) {
+    if (left.size() != right.size())
+        throw std::length_error("operator==(const MyVector &left, const MyVector &right)");
+
+    MyVector tmp(left.size());
+    for (int i = 0; i < left.size(); i++)
+        tmp[i] = (left[i] == right[i]);
+    return std::move(tmp);
+}
+
+/**
+ * @brief Перегрузка оператора проверки на неравенство двух экземпляров класса MyVector
+ * 
+ * @param[in] left Левый экземпляр класса MyVector
+ * @param[in] right Правый экземпляр класса MyVector
+ * @return Результирующий экземпляр класса MyVector
+ */
+MyVector operator!=(const MyVector &left, const MyVector &right) {
+    return std::move(!(left == right));
+}
+
+/**
+ * @brief Перегрузка оператора "меньше" для двух экземпляров класса MyVector
+ * 
+ * @param[in] left Левый экземпляр класса MyVector
+ * @param[in] right Правый экземпляр класса MyVector
+ * @return Результирующий экземпляр класса MyVector
+ */
+MyVector operator<(const MyVector &left, const MyVector &right) {
+    if (left.size() != right.size())
+        throw std::length_error("operator==(const MyVector &left, const MyVector &right)");
+
+    MyVector tmp(left.size());
+    for (int i = 0; i < left.size(); i++)
+        tmp[i] = (left[i] < right[i]);
+    return std::move(tmp);
+}
+
+/**
+ * @brief Перегрузка оператора "больше" для двух экземпляров класса MyVector
+ * 
+ * @param[in] left Левый экземпляр класса MyVector
+ * @param[in] right Правый экземпляр класса MyVector
+ * @return Результирующий экземпляр класса MyVector
+ */
+MyVector operator>(const MyVector &left, const MyVector &right) {
+    return std::move(right < left);
+}
+
+/**
+ * @brief Перегрузка оператора "меньше или равно" для двух экземпляров класса MyVector
+ * 
+ * @param[in] left Левый экземпляр класса MyVector
+ * @param[in] right Правый экземпляр класса MyVector
+ * @return Результирующий экземпляр класса MyVector
+ */
+MyVector operator<=(const MyVector &left, const MyVector &right) {
+    return std::move(!(right < left));
+}
+
+/**
+ * @brief Перегрузка оператора "больше или равно" для двух экземпляров класса MyVector
+ * 
+ * @param[in] left Левый экземпляр класса MyVector
+ * @param[in] right Правый экземпляр класса MyVector
+ * @return Результирующий экземпляр класса MyVector
+ */
+MyVector operator>=(const MyVector &left, const MyVector &right) {
+    return std::move(!(left < right));
+}

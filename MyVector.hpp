@@ -65,5 +65,12 @@ MyVector operator*(const double num, const MyVector &cls);
 MyVector operator/(const MyVector &cls, const double num);
 MyVector operator/(const double num, const MyVector &cls);
 
+MyVector operator==(const MyVector &left, const MyVector &right);
+MyVector operator!=(const MyVector &left, const MyVector &right);
+MyVector operator<(const MyVector &left, const MyVector &right);
+MyVector operator>(const MyVector &left, const MyVector &right);
+MyVector operator<=(const MyVector &left, const MyVector &right);
+MyVector operator>=(const MyVector &left, const MyVector &right);
+
 
 #endif /* __MY_VECTOR_HPP__ */

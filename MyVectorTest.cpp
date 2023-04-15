@@ -418,3 +418,87 @@ BOOST_AUTO_TEST_CASE(operator_negation) {
         BOOST_CHECK_EQUAL(k2[i], !k1[i]);
     }
 }
+
+// Проверка оператора "равно"
+BOOST_AUTO_TEST_CASE(operator_equal) {
+    MyVector k1 = {4, 0, 1, -3, 99.77};
+    MyVector k2 = {-2, 10, -3, 1, 0};
+    MyVector k3 = (k1 == k2);
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    BOOST_REQUIRE_EQUAL(k1.size(), k3.size());
+    for (int i = 0; i < k1.size(); i++)
+        BOOST_CHECK_EQUAL(k1[i] == k2[i], k3[i]);
+
+    MyVector k4 = {1, 9, -3};
+    BOOST_CHECK_THROW(k1 == k4, std::length_error);
+}
+
+// Проверка оператора "не равно"
+BOOST_AUTO_TEST_CASE(operator_not_equal) {
+    MyVector k1 = {4, 0, 1, -3, 99.77};
+    MyVector k2 = {-2, 10, -3, 1, 0};
+    MyVector k3 = (k1 != k2);
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    BOOST_REQUIRE_EQUAL(k1.size(), k3.size());
+    for (int i = 0; i < k1.size(); i++)
+        BOOST_CHECK_EQUAL(k1[i] != k2[i], k3[i]);
+
+    MyVector k4 = {1, 9, -3};
+    BOOST_CHECK_THROW(k1 != k4, std::length_error);
+}
+
+// Проверка оператора "больше"
+BOOST_AUTO_TEST_CASE(operator_gt) {
+    MyVector k1 = {4, 0, 1, -3, 99.77};
+    MyVector k2 = {-2, 10, -3, 1, 0};
+    MyVector k3 = (k1 > k2);
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    BOOST_REQUIRE_EQUAL(k1.size(), k3.size());
+    for (int i = 0; i < k1.size(); i++)
+        BOOST_CHECK_EQUAL(k1[i] > k2[i], k3[i]);
+
+    MyVector k4 = {1, 9, -3};
+    BOOST_CHECK_THROW(k1 > k4, std::length_error);
+}
+
+// Проверка оператора "меньше"
+BOOST_AUTO_TEST_CASE(operator_lt) {
+    MyVector k1 = {4, 0, 1, -3, 99.77};
+    MyVector k2 = {-2, 10, -3, 1, 0};
+    MyVector k3 = (k1 < k2);
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    BOOST_REQUIRE_EQUAL(k1.size(), k3.size());
+    for (int i = 0; i < k1.size(); i++)
+        BOOST_CHECK_EQUAL(k1[i] < k2[i], k3[i]);
+
+    MyVector k4 = {1, 9, -3};
+    BOOST_CHECK_THROW(k1 < k4, std::length_error);
+}
+
+// Проверка оператора "больше или равно"
+BOOST_AUTO_TEST_CASE(operator_ge) {
+    MyVector k1 = {4, 0, 1, -3, 99.77};
+    MyVector k2 = {-2, 10, -3, 1, 0};
+    MyVector k3 = (k1 >= k2);
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    BOOST_REQUIRE_EQUAL(k1.size(), k3.size());
+    for (int i = 0; i < k1.size(); i++)
+        BOOST_CHECK_EQUAL(k1[i] >= k2[i], k3[i]);
+
+    MyVector k4 = {1, 9, -3};
+    BOOST_CHECK_THROW(k1 >= k4, std::length_error);
+}
+
+// Проверка оператора "меньше или равно"
+BOOST_AUTO_TEST_CASE(operator_le) {
+    MyVector k1 = {4, 0, 1, -3, 99.77};
+    MyVector k2 = {-2, 10, -3, 1, 0};
+    MyVector k3 = (k1 <= k2);
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    BOOST_REQUIRE_EQUAL(k1.size(), k3.size());
+    for (int i = 0; i < k1.size(); i++)
+        BOOST_CHECK_EQUAL(k1[i] <= k2[i], k3[i]);
+
+    MyVector k4 = {1, 9, -3};
+    BOOST_CHECK_THROW(k1 <= k4, std::length_error);
+}
