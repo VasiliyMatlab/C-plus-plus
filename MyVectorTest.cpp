@@ -502,3 +502,87 @@ BOOST_AUTO_TEST_CASE(operator_le) {
     MyVector k4 = {1, 9, -3};
     BOOST_CHECK_THROW(k1 <= k4, std::length_error);
 }
+
+// Проверка оператора MyVector == double и double == MyVector
+BOOST_AUTO_TEST_CASE(operator_equal_double) {
+    MyVector k1 = {0, 1, 2.2, -2.2, 4.76, 3};
+    double num  = 2.2;
+    MyVector k2 = (k1 == num);
+    MyVector k3 = (num == k1);
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    BOOST_REQUIRE_EQUAL(k1.size(), k3.size());
+    for (int i = 0; i < k1.size(); i++) {
+        BOOST_CHECK_EQUAL(k1[i] == num, k2[i]);
+        BOOST_CHECK_EQUAL(num == k1[i], k3[i]);
+    }
+}
+
+// Проверка оператора MyVector != double и double != MyVector
+BOOST_AUTO_TEST_CASE(operator_ne_double) {
+    MyVector k1 = {0, 1, 2.2, -2.2, 4.76, 3};
+    double num  = 2.2;
+    MyVector k2 = (k1 != num);
+    MyVector k3 = (num != k1);
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    BOOST_REQUIRE_EQUAL(k1.size(), k3.size());
+    for (int i = 0; i < k1.size(); i++) {
+        BOOST_CHECK_EQUAL(k1[i] != num, k2[i]);
+        BOOST_CHECK_EQUAL(num != k1[i], k3[i]);
+    }
+}
+
+// Проверка оператора MyVector < double и double < MyVector
+BOOST_AUTO_TEST_CASE(operator_lt_double) {
+    MyVector k1 = {0, 1, 2.2, -2.2, 4.76, 3};
+    double num  = 2.2;
+    MyVector k2 = (k1 < num);
+    MyVector k3 = (num < k1);
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    BOOST_REQUIRE_EQUAL(k1.size(), k3.size());
+    for (int i = 0; i < k1.size(); i++) {
+        BOOST_CHECK_EQUAL(k1[i] < num, k2[i]);
+        BOOST_CHECK_EQUAL(num < k1[i], k3[i]);
+    }
+}
+
+// Проверка оператора MyVector > double и double > MyVector
+BOOST_AUTO_TEST_CASE(operator_gt_double) {
+    MyVector k1 = {0, 1, 2.2, -2.2, 4.76, 3};
+    double num  = 2.2;
+    MyVector k2 = (k1 > num);
+    MyVector k3 = (num > k1);
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    BOOST_REQUIRE_EQUAL(k1.size(), k3.size());
+    for (int i = 0; i < k1.size(); i++) {
+        BOOST_CHECK_EQUAL(k1[i] > num, k2[i]);
+        BOOST_CHECK_EQUAL(num > k1[i], k3[i]);
+    }
+}
+
+// Проверка оператора MyVector <= double и double <= MyVector
+BOOST_AUTO_TEST_CASE(operator_le_double) {
+    MyVector k1 = {0, 1, 2.2, -2.2, 4.76, 3};
+    double num  = 2.2;
+    MyVector k2 = (k1 <= num);
+    MyVector k3 = (num <= k1);
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    BOOST_REQUIRE_EQUAL(k1.size(), k3.size());
+    for (int i = 0; i < k1.size(); i++) {
+        BOOST_CHECK_EQUAL(k1[i] <= num, k2[i]);
+        BOOST_CHECK_EQUAL(num <= k1[i], k3[i]);
+    }
+}
+
+// Проверка оператора MyVector >= double и double >= MyVector
+BOOST_AUTO_TEST_CASE(operator_ge_double) {
+    MyVector k1 = {0, 1, 2.2, -2.2, 4.76, 3};
+    double num  = 2.2;
+    MyVector k2 = (k1 >= num);
+    MyVector k3 = (num >= k1);
+    BOOST_REQUIRE_EQUAL(k1.size(), k2.size());
+    BOOST_REQUIRE_EQUAL(k1.size(), k3.size());
+    for (int i = 0; i < k1.size(); i++) {
+        BOOST_CHECK_EQUAL(k1[i] >= num, k2[i]);
+        BOOST_CHECK_EQUAL(num >= k1[i], k3[i]);
+    }
+}

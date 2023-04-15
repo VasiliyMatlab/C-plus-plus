@@ -645,3 +645,145 @@ MyVector operator<=(const MyVector &left, const MyVector &right) {
 MyVector operator>=(const MyVector &left, const MyVector &right) {
     return std::move(!(left < right));
 }
+
+/**
+ * @brief Перегрузка оператора проверки на равенство экземпляра класса MyVector и числа
+ * 
+ * @param[in] cls Ссылка на экземпляр класса MyVector
+ * @param[in] num Число
+ * @return Результирующий экземпляр класса MyVector
+ */
+MyVector operator==(const MyVector &cls, const double num) {
+    MyVector tmp(cls.size());
+    for (int i = 0; i < tmp.size(); i++)
+        tmp[i] = (cls[i] == num);
+    return std::move(tmp);
+}
+
+/**
+ * @brief Перегрузка оператора проверки на равенство числа и экземпляра класса MyVector
+ * 
+ * @param[in] num Число
+ * @param[in] cls Ссылка на экземпляр класса MyVector
+ * @return Результирующий экземпляр класса MyVector
+ */
+MyVector operator==(const double num, const MyVector &cls) {
+    return std::move(cls == num);
+}
+
+/**
+ * @brief Перегрузка оператора проверки на неравенство экземпляра класса MyVector и числа
+ * 
+ * @param[in] cls Ссылка на экземпляр класса MyVector
+ * @param[in] num Число
+ * @return Результирующий экземпляр класса MyVector
+ */
+MyVector operator!=(const MyVector &cls, const double num) {
+    return std::move(!(cls == num));
+}
+
+/**
+ * @brief Перегрузка оператора проверки на неравенство числа и экземпляра класса MyVector
+ * 
+ * @param[in] num Число
+ * @param[in] cls Ссылка на экземпляр класса MyVector
+ * @return Результирующий экземпляр класса MyVector
+ */
+MyVector operator!=(const double num, const MyVector &cls) {
+    return std::move(!(cls == num));
+}
+
+/**
+ * @brief Перегрузка оператора "меньше" для экземпляра класса MyVector и числа
+ * 
+ * @param[in] cls Ссылка на экземпляр класса MyVector
+ * @param[in] num Число
+ * @return Результирующий экземпляр класса MyVector
+ */
+MyVector operator<(const MyVector &cls, const double num) {
+    MyVector tmp(cls.size());
+    for (int i = 0; i < tmp.size(); i++)
+        tmp[i] = (cls[i] < num);
+    return std::move(tmp);
+}
+
+/**
+ * @brief Перегрузка оператора "меньше" для числа и экземпляра класса MyVector
+ * 
+ * @param[in] num Число
+ * @param[in] cls Ссылка на экземпляр класса MyVector
+ * @return Результирующий экземпляр класса MyVector
+ */
+MyVector operator<(const double num, const MyVector &cls) {
+    return std::move(cls > num);
+}
+
+/**
+ * @brief Перегрузка оператора "больше" для экземпляра класса MyVector и числа
+ * 
+ * @param[in] cls Ссылка на экземпляр класса MyVector
+ * @param[in] num Число
+ * @return Результирующий экземпляр класса MyVector
+ */
+MyVector operator>(const MyVector &cls, const double num) {
+    MyVector tmp(cls.size());
+    for (int i = 0; i < cls.size(); i++)
+        tmp[i] = (cls[i] > num);
+    return std::move(tmp);
+}
+
+/**
+ * @brief Перегрузка оператора "больше" для числа и экземпляра класса MyVector
+ * 
+ * @param[in] num Число
+ * @param[in] cls Ссылка на экземпляр класса MyVector
+ * @return Результирующий экземпляр класса MyVector
+ */
+MyVector operator>(const double num, const MyVector &cls) {
+    return std::move(cls < num);
+}
+
+/**
+ * @brief Перегрузка оператора "меньше или равно" для экземпляра класса MyVector и числа
+ * 
+ * @param[in] cls Ссылка на экземпляр класса MyVector
+ * @param[in] num Число
+ * @return Результирующий экземпляр класса MyVector
+ */
+MyVector operator<=(const MyVector &cls, const double num) {
+    return std::move(!(cls > num));
+}
+
+/**
+ * @brief Перегрузка оператора "меньше или равно" для числа и экземпляра класса MyVector
+ * 
+ * @param[in] num Число
+ * @param[in] cls Ссылка на экземпляр класса MyVector
+ * @return Результирующий экземпляр класса MyVector
+ */
+MyVector operator<=(const double num, const MyVector &cls) {
+    return std::move(!(cls < num));
+}
+
+/**
+ * @brief Перегрузка оператора "больше или равно" для экземпляра класса MyVector и числа
+ * 
+ * @param[in] cls Ссылка на экземпляр класса MyVector
+ * @param[in] num Число
+ * @return Результирующий экземпляр класса MyVector
+ */
+MyVector operator>=(const MyVector &cls, const double num) {
+    return std::move(!(cls < num));
+}
+
+/**
+ * @brief Перегрузка оператора "больше или равно" для числа и экземпляра класса MyVector
+ * 
+ * @param[in] num Число
+ * @param[in] cls Ссылка на экземпляр класса MyVector
+ * @return Результирующий экземпляр класса MyVector
+ */
+MyVector operator>=(const double num, const MyVector &cls) {
+    return std::move(!(cls > num));
+}
+
